@@ -5,12 +5,12 @@ import { Menu, X, Phone, Instagram, Facebook, MapPin, Info, Home } from 'lucide-
 const Hero = React.lazy(() => import('./components/Hero').catch(() => ({ default: () => <div>Hero Error</div> })));
 const FloorPlan = React.lazy(() => import('./components/FloorPlan').catch(() => ({ default: () => <div>FloorPlan Error</div> })));
 const Gallery = React.lazy(() => import('./components/Gallery').catch(() => ({ default: () => <div>Gallery Error</div> })));
-const AIChatWidget = React.lazy(() => import('./components/AIChatWidget').catch(() => ({ default: () => <div>Chat Error</div> })));
 const AdminPanel = React.lazy(() => import('./components/AdminPanel').catch(() => ({ default: () => <div>Admin Error</div> })));
 const Features = React.lazy(() => import('./components/Features').catch(() => ({ default: () => <div>Features Error</div> })));
 const FinancingSection = React.lazy(() => import('./components/FinancingSection').catch(() => ({ default: () => <div>Financing Error</div> })));
 const ContactModal = React.lazy(() => import('./components/ContactModal').catch(() => ({ default: () => <div>Contact Error</div> })));
 const FAQSection = React.lazy(() => import('./components/FAQSection').catch(() => ({ default: () => <div>FAQ Error</div> })));
+const UnitFilter = React.lazy(() => import('./components/UnitFilter').catch(() => ({ default: () => <div>Filter Error</div> })));
 
 import { supabase, trackEvent } from './services/supabaseClient';
 
@@ -87,9 +87,17 @@ function App() {
       style={{
         backgroundImage: heroImage ? `url(${heroImage})` : 'none',
         backgroundAttachment: 'fixed',
-        backgroundColor: '#0a0f1a'
+        backgroundColor: '#0a0f1a',
+        scrollPaddingTop: '96px' // Header height
       }}
     >
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        html {
+          scroll-padding-top: 96px;
+          scroll-behavior: smooth;
+        }
+      `}} />
       <React.Suspense fallback={null}>
         {isAdminOpen && (
           <AdminPanel
@@ -168,6 +176,7 @@ function App() {
           <Features />
           <div id="projeto" className="bg-[#0a0f1a]">
             <FloorPlan floorPlanImage={floorPlanImage} />
+            <UnitFilter />
           </div>
           <FinancingSection />
           <Gallery images={galleryImages} />
@@ -186,10 +195,10 @@ function App() {
             className="absolute inset-0"
           ></iframe>
 
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:left-20 md:translate-x-0 bg-[#0d121f] p-8 rounded-[2rem] border border-white/10 shadow-3xl max-w-sm">
-            <span className="text-emerald-500 text-[10px] font-black uppercase tracking-widest mb-3 block text-center md:text-left">Endereço Privilegiado</span>
-            <h3 className="font-black text-2xl mb-4 text-white text-center md:text-left">Localização Livre de Enchentes</h3>
-            <p className="text-slate-500 text-sm flex items-start gap-3 leading-relaxed">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:left-20 md:translate-x-0 bg-[#0d121f] p-6 md:p-8 rounded-[2rem] border border-white/10 shadow-3xl max-w-[85%] md:max-w-sm">
+            <span className="text-emerald-500 text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-2 md:mb-3 block text-center md:text-left">Endereço Privilegiado</span>
+            <h3 className="font-black text-xl md:text-2xl mb-3 md:mb-4 text-white text-center md:text-left">Localização Livre de Enchentes</h3>
+            <p className="text-slate-500 text-xs md:text-sm flex items-start gap-3 leading-relaxed">
               <MapPin className="w-5 h-5 text-emerald-600 shrink-0" />
               Bairro Barragem - Rio do Sul. Próximo a tudo o que você precisa com a segurança que você merece.
             </p>
@@ -242,7 +251,6 @@ function App() {
       </a>
 
       <React.Suspense fallback={null}>
-        <AIChatWidget />
         <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
       </React.Suspense>
     </div >

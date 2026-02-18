@@ -19,14 +19,13 @@ export const PROJECT_DETAILS = {
     "1 Suíte Real + 1 Dormitório Amplo",
     "Banheiros com Nicho e Acabamento Amadeirado",
     "Área de Serviço Coberta e Independente",
-    "Vaga de Garagem Coberta com Abrigo",
     "Aceita Carro na Negociação (sob avaliação)"
   ]
 };
 
 export const UNITS: UnitStatus[] = [
-  { id: 1, name: "Unidade 01 (Lado Cinza)", status: 'disponivel', price: 395000 },
-  { id: 2, name: "Unidade 02 (Lado Azul)", status: 'disponivel', price: 395000 }
+  { id: 1, name: "Unidade 01 (Lado Esquerdo)", status: 'disponivel', price: 395000 },
+  { id: 2, name: "Unidade 02 (Lado Direito)", status: 'disponivel', price: 395000 }
 ];
 
 export const TESTIMONIALS: Testimonial[] = [

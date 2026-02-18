@@ -16,16 +16,16 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, icon }) => {
                 onClick={() => setIsOpen(!isOpen)}
                 className="w-full py-6 flex items-center justify-between text-left group transition-all"
             >
-                <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all">
-                        {icon}
+                <div className="flex items-center gap-3 md:gap-4">
+                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all shrink-0">
+                        {React.cloneElement(icon as React.ReactElement, { className: "w-4 h-4 md:w-5 md:h-5" })}
                     </div>
-                    <span className="text-white font-bold text-lg md:text-xl uppercase tracking-tighter">{question}</span>
+                    <span className="text-white font-bold text-sm md:text-xl uppercase tracking-tighter leading-tight">{question}</span>
                 </div>
-                {isOpen ? <ChevronUp className="text-emerald-500 w-6 h-6" /> : <ChevronDown className="text-slate-600 w-6 h-6" />}
+                {isOpen ? <ChevronUp className="text-emerald-500 w-5 h-5 md:w-6 md:h-6 shrink-0" /> : <ChevronDown className="text-slate-600 w-5 h-5 md:w-6 md:h-6 shrink-0" />}
             </button>
             <div className={`overflow-hidden transition-all duration-500 ${isOpen ? 'max-h-96 pb-8' : 'max-h-0'}`}>
-                <p className="text-slate-400 text-base md:text-lg leading-relaxed pl-14">
+                <p className="text-slate-400 text-xs md:text-lg leading-relaxed pl-11 md:pl-14">
                     {answer}
                 </p>
             </div>

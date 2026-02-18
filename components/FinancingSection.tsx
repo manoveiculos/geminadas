@@ -176,11 +176,11 @@ const FinancingSection: React.FC = () => {
                         <Check className="w-3 h-3" />
                         Análise de Perfil
                     </div>
-                    <h2 className="text-5xl md:text-6xl font-black text-white mb-6 leading-tight">
-                        Seu plano de <span className="text-emerald-500">Investimento</span>
+                    <h2 className="text-3xl md:text-6xl font-black text-white mb-6 leading-tight uppercase">
+                        Condições de <span className="text-emerald-500">Pagamento</span>
                     </h2>
-                    <p className="text-slate-400 text-lg font-medium">
-                        Personalize seus valores para iniciarmos sua análise profissional.
+                    <p className="text-slate-400 text-sm md:text-lg font-medium leading-relaxed">
+                        Entenda como conquistar sua casa: você utiliza seus recursos (entrada) e o banco financia o restante em parcelas que cabem no seu bolso.
                     </p>
                 </div>
 
@@ -188,33 +188,33 @@ const FinancingSection: React.FC = () => {
 
                     {/* Painel Lateral de Confiança */}
                     <div className="lg:col-span-4 space-y-6">
-                        <div className="bg-[#111827] p-8 rounded-[2rem] border border-white/5 shadow-2xl h-full relative overflow-hidden group">
+                        <div className="bg-[#111827] p-6 md:p-8 rounded-[2rem] border border-white/5 shadow-2xl h-full relative overflow-hidden group">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition-colors"></div>
 
-                            <h4 className="text-xl font-bold mb-8 flex items-center gap-3">
-                                <ShieldCheck className="text-emerald-500 w-6 h-6" />
+                            <h4 className="text-lg md:text-xl font-bold mb-6 md:mb-8 flex items-center gap-3 uppercase tracking-tighter">
+                                <ShieldCheck className="text-emerald-500 w-5 h-5 md:w-6 md:h-6" />
                                 Segurança Jurídica
                             </h4>
 
-                            <div className="space-y-8">
+                            <div className="space-y-6 md:space-y-8">
                                 <div className="space-y-1 group/item">
-                                    <div className="flex items-center gap-3 text-white font-bold text-sm">
-                                        <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+                                    <div className="flex items-center gap-3 text-white font-bold text-xs md:text-sm uppercase tracking-tighter">
+                                        <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
                                             <Gavel className="w-4 h-4 text-emerald-500" />
                                         </div>
                                         Obra 100% Legalizada
                                     </div>
-                                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider ml-11">Construção em total conformidade com as leis.</p>
+                                    <p className="text-[9px] md:text-[10px] text-slate-500 uppercase font-bold tracking-wider ml-11">Documentação em dia.</p>
                                 </div>
 
                                 <div className="space-y-1 group/item">
-                                    <div className="flex items-center gap-3 text-white font-bold text-sm">
-                                        <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+                                    <div className="flex items-center gap-3 text-white font-bold text-xs md:text-sm uppercase tracking-tighter">
+                                        <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
                                             <FileCheck className="w-4 h-4 text-emerald-500" />
                                         </div>
-                                        Pronta para Aprovação
+                                        Pronta para Morar
                                     </div>
-                                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider ml-11">Documentação agilizada para seu financiamento.</p>
+                                    <p className="text-[9px] md:text-[10px] text-slate-500 uppercase font-bold tracking-wider ml-11">Aprovação agilizada.</p>
                                 </div>
 
                                 <div className="space-y-4 pt-8 border-t border-white/5">
@@ -273,7 +273,7 @@ const FinancingSection: React.FC = () => {
                                     <div className="flex items-center justify-between mb-16">
                                         <div className="flex flex-col">
                                             <span className="text-emerald-500 text-[10px] font-black uppercase tracking-[0.3em] mb-2">ETAPA {step} DE 5</span>
-                                            <h3 className="text-3xl font-black text-white">
+                                            <h3 className="text-xl md:text-3xl font-black text-white uppercase tracking-tighter">
                                                 {step === 1 && "Entrada"}
                                                 {step === 2 && "Crédito"}
                                                 {step === 3 && "Seu Plano"}
@@ -305,14 +305,18 @@ const FinancingSection: React.FC = () => {
                                                     <div className="flex items-center gap-2 text-slate-400 font-black text-[10px] tracking-widest uppercase"><Car className="w-4 h-4 text-emerald-500" /> SEU CARRO</div>
                                                 </div>
 
-                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                                    <button onClick={() => setStep(2)} className="py-8 rounded-[2rem] bg-emerald-500 text-slate-950 hover:bg-emerald-400 transform hover:-translate-y-1 transition-all font-black text-lg shadow-xl shadow-emerald-500/20 active:scale-95">
-                                                        SIM, EU CONSIGO!
+                                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                                    <button onClick={() => setStep(2)} className="py-8 rounded-[2rem] bg-emerald-500 text-slate-950 hover:bg-emerald-400 transform hover:-translate-y-1 transition-all font-black text-sm shadow-xl shadow-emerald-500/20 active:scale-95 leading-tight uppercase px-4">
+                                                        SIM, EU <br /> CONSIGO!
                                                     </button>
-                                                    <button onClick={handleHelpRequest} className="py-8 rounded-[2rem] border-2 border-white/10 text-white hover:bg-white/5 transition-all font-black text-lg active:scale-95">
-                                                        PRECISO DE AJUDA
+                                                    <button onClick={() => setStep(3)} className="py-8 rounded-[2rem] bg-slate-800 text-white hover:bg-slate-700 transform hover:-translate-y-1 transition-all font-black text-sm active:scale-95 leading-tight uppercase px-4">
+                                                        SIMULAÇÃO <br /> EXPRESSA
+                                                    </button>
+                                                    <button onClick={handleHelpRequest} className="py-8 rounded-[2rem] border-2 border-white/10 text-white hover:bg-white/5 transition-all font-black text-sm active:scale-95 leading-tight uppercase px-4">
+                                                        PRECISO <br /> DE AJUDA
                                                     </button>
                                                 </div>
+                                                <p className="text-center text-slate-500 text-[9px] font-black uppercase tracking-[0.2em]">Pule o quiz se desejar apenas ver a calculadora.</p>
                                             </div>
                                         )}
 

@@ -134,8 +134,13 @@ const FloorPlan: React.FC<FloorPlanProps> = ({ floorPlanImage }) => {
                     className="fixed inset-0 z-[10000] bg-slate-950/98 backdrop-blur-3xl flex items-center justify-center p-4 md:p-10 animate-in fade-in zoom-in duration-500"
                     onClick={() => setIsZoomed(false)}
                 >
-                    <button className="absolute top-10 right-10 text-white/50 hover:text-white transition-colors z-50 bg-white/10 p-4 rounded-full backdrop-blur-md border border-white/10 active:scale-90">
-                        <X className="w-8 h-8" />
+                    {/* Botão Fechar Melhorado */}
+                    <button
+                        onClick={() => setIsZoomed(false)}
+                        className="fixed top-6 right-6 md:top-10 md:right-10 flex items-center gap-2 bg-emerald-600 text-white px-6 py-3 rounded-2xl shadow-2xl z-[10001] active:scale-90 transition-all border border-emerald-400/30"
+                    >
+                        <X className="w-5 h-5" />
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Fechar</span>
                     </button>
 
                     <div className="relative w-full max-w-6xl h-auto max-h-[90vh] bg-[#0d121f] rounded-[3rem] p-8 md:p-16 overflow-auto shadow-3xl border border-white/10 flex flex-col items-center" onClick={e => e.stopPropagation()}>
