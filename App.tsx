@@ -86,17 +86,18 @@ function App() {
   };
 
   return (
-    <div
-      className="min-h-screen flex flex-col font-sans selection:bg-emerald-500/30"
-      style={{
-        backgroundImage: heroImage ? `url(${heroImage})` : 'none',
-        backgroundAttachment: 'fixed',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundColor: '#0a0f1a',
-        scrollPaddingTop: '96px' // Header height
-      }}
-    >
+    <div className="min-h-screen flex flex-col font-sans selection:bg-emerald-500/30 bg-[#0a0f1a]">
+      {/* Background Image Fix for Mobile and Desktop */}
+      <div
+        className="fixed inset-0 z-[-1] pointer-events-none"
+        style={{
+          backgroundImage: heroImage ? `url(${heroImage})` : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundColor: '#0a0f1a',
+        }}
+      />
+      <div className="fixed inset-0 z-[-1] pointer-events-none bg-[#0a0f1a]/40" />
       <style dangerouslySetInnerHTML={{
         __html: `
         html {
