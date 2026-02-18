@@ -86,18 +86,18 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans selection:bg-emerald-500/30 bg-[#0a0f1a]">
+    <div className="relative min-h-screen flex flex-col font-sans selection:bg-emerald-500/30">
       {/* Background Image Fix for Mobile and Desktop */}
       <div
-        className="fixed inset-0 z-[-1] pointer-events-none"
+        className="fixed inset-0 pointer-events-none"
         style={{
           backgroundImage: heroImage ? `url(${heroImage})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundColor: '#0a0f1a',
+          zIndex: -2
         }}
       />
-      <div className="fixed inset-0 z-[-1] pointer-events-none bg-[#0a0f1a]/40" />
+      <div className="fixed inset-0 pointer-events-none bg-[#0a0f1a]/15" style={{ zIndex: -1 }} />
       <style dangerouslySetInnerHTML={{
         __html: `
         html {
@@ -181,7 +181,7 @@ function App() {
 
         <React.Suspense fallback={null}>
           <Features />
-          <div id="projeto" className="bg-[#0a0f1a]">
+          <div id="projeto" className="bg-[#0a0f1a]/40 bg-transparent">
             <FloorPlan floorPlanImage={floorPlanImage} />
             <UnitFilter />
           </div>
