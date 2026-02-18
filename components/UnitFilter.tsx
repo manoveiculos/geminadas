@@ -67,7 +67,10 @@ const UnitFilter: React.FC = () => {
 
                         {unit.status === 'disponivel' && (
                             <button
-                                onClick={() => document.getElementById('simulacao')?.scrollIntoView({ behavior: 'smooth' })}
+                                onClick={() => {
+                                    const message = encodeURIComponent(`Olá! Tenho interesse em reservar a ${unit.name} do Residencial Alêro.`);
+                                    window.open(`https://wa.me/5547988452087?text=${message}`, '_blank');
+                                }}
                                 className="w-full mt-8 py-4 bg-emerald-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-emerald-500 transition-all shadow-lg active:scale-95"
                             >
                                 Quero Reservar esta Unidade

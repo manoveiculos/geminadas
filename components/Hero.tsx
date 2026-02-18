@@ -9,10 +9,11 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ heroImage }) => {
   return (
     <div className="relative min-h-screen w-full flex items-center overflow-hidden pt-24">
-      {/* Overlays de Profundidade (sobre o fundo global) */}
+
+      {/* Overlays de Profundidade */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0f1a]/80 via-[#0a0f1a]/40 to-transparent"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1a]/80 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0f1a] via-[#0a0f1a]/40 md:via-[#0a0f1a]/80 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1a] via-transparent to-transparent"></div>
       </div>
 
       {/* Esfera de Brilho */}

@@ -32,7 +32,17 @@ const FinancingSection: React.FC = () => {
     // Auto-scroll logic when step changes
     useEffect(() => {
         if (step > 1 || success) {
-            document.getElementById('simulacao')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            const element = document.getElementById('fluxo-simulacao');
+            if (element) {
+                const offset = 100; // Espaço para o header fixo
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
         }
     }, [step, success]);
 
@@ -167,11 +177,11 @@ const FinancingSection: React.FC = () => {
     };
 
     return (
-        <section id="simulacao" className="py-24 bg-[#0a0f1a]/80 backdrop-blur-md relative overflow-hidden text-white">
+        <section id="simulacao" className="py-8 md:py-24 bg-[#0a0f1a]/80 backdrop-blur-md relative overflow-hidden text-white">
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
 
             <div className="container mx-auto px-6 relative z-10">
-                <div className="text-center max-w-3xl mx-auto mb-16">
+                <div className="text-center max-w-3xl mx-auto mb-6 md:mb-16 px-4">
                     <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6">
                         <Check className="w-3 h-3" />
                         Análise de Perfil
@@ -187,7 +197,7 @@ const FinancingSection: React.FC = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-6xl mx-auto">
 
                     {/* Painel Lateral de Confiança */}
-                    <div className="lg:col-span-4 space-y-6">
+                    <div className="lg:col-span-4 order-2 lg:order-1 space-y-6">
                         <div className="bg-[#111827] p-6 md:p-8 rounded-[2rem] border border-white/5 shadow-2xl h-full relative overflow-hidden group">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition-colors"></div>
 
@@ -244,13 +254,13 @@ const FinancingSection: React.FC = () => {
                     </div>
 
                     {/* Área do Fluxo / Simulador */}
-                    <div className="lg:col-span-8">
-                        <div className="bg-[#111827] p-8 md:p-12 rounded-[2.5rem] border border-white/10 shadow-3xl min-h-[550px] flex flex-col justify-center relative">
+                    <div className="lg:col-span-8 order-1 lg:order-2">
+                        <div id="fluxo-simulacao" className="bg-[#111827] p-4 md:p-12 rounded-[2rem] md:rounded-[2.5rem] border border-white/10 shadow-3xl min-h-[380px] md:min-h-[550px] flex flex-col justify-center relative scroll-mt-24">
 
                             {step > 1 && !success && (
                                 <button
                                     onClick={() => setStep(step - 1)}
-                                    className="absolute top-8 left-8 flex items-center gap-2 text-slate-500 hover:text-emerald-500 transition-colors font-bold text-[10px] uppercase tracking-widest group"
+                                    className="md:absolute md:top-8 md:left-8 mb-4 md:mb-0 flex items-center justify-center md:justify-start gap-2 text-slate-500 hover:text-emerald-500 transition-colors font-bold text-[9px] md:text-[10px] uppercase tracking-widest group"
                                 >
                                     <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                                     Voltar
@@ -270,9 +280,9 @@ const FinancingSection: React.FC = () => {
                                 </div>
                             ) : (
                                 <>
-                                    <div className="flex items-center justify-between mb-16">
-                                        <div className="flex flex-col">
-                                            <span className="text-emerald-500 text-[10px] font-black uppercase tracking-[0.3em] mb-2">ETAPA {step} DE 5</span>
+                                    <div className="flex flex-col md:flex-row items-center justify-between mb-4 md:mb-16 gap-2 md:gap-6">
+                                        <div className="flex flex-col items-center md:items-start text-center md:text-left">
+                                            <span className="text-emerald-500 text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] mb-1 md:mb-2 leading-none">ETAPA {step} DE 5</span>
                                             <h3 className="text-xl md:text-3xl font-black text-white uppercase tracking-tighter">
                                                 {step === 1 && "Entrada"}
                                                 {step === 2 && "Crédito"}
@@ -281,9 +291,9 @@ const FinancingSection: React.FC = () => {
                                                 {step === 5 && "Finalizar"}
                                             </h3>
                                         </div>
-                                        <div className="flex gap-2">
+                                        <div className="flex gap-1.5 md:gap-2">
                                             {[1, 2, 3, 4, 5].map(i => (
-                                                <div key={i} className={`w-12 h-2 rounded-full transition-all duration-700 ${step >= i ? 'bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.4)]' : 'bg-white/5'}`}></div>
+                                                <div key={i} className={`w-8 md:w-12 h-1 md:h-2 rounded-full transition-all duration-700 ${step >= i ? 'bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.4)]' : 'bg-white/5'}`}></div>
                                             ))}
                                         </div>
                                     </div>
@@ -291,48 +301,47 @@ const FinancingSection: React.FC = () => {
                                     <div className="flex-grow">
                                         {/* Step 1: Entry Check */}
                                         {step === 1 && (
-                                            <div className="animate-in fade-in slide-in-from-right duration-500 space-y-8">
-                                                <div className="text-center space-y-4">
-                                                    <h4 className="text-2xl font-bold text-white">Para este perfil de imóvel, o banco solicita uma <br className="hidden md:block" /> <span className="text-emerald-500">entrada mínima de R$ 79 mil.</span></h4>
-                                                    <p className="text-slate-400 text-sm max-w-lg mx-auto leading-relaxed">
+                                            <div className="animate-in fade-in slide-in-from-right duration-500 space-y-4 md:space-y-8">
+                                                <div className="text-center space-y-2 md:space-y-4">
+                                                    <h4 className="text-sm md:text-2xl font-bold text-white leading-tight">Para este perfil de imóvel, o banco solicita uma <br className="hidden md:block" /> <span className="text-emerald-500">entrada mínima de R$ 79 mil.</span></h4>
+                                                    <p className="text-slate-400 text-[10px] md:text-sm max-w-lg mx-auto leading-relaxed">
                                                         Sabemos que é um valor importante. A boa notícia é que você pode somar seus recursos para chegar lá:
                                                     </p>
                                                 </div>
 
-                                                <div className="flex flex-wrap justify-center gap-8 py-8 border-y border-white/5">
-                                                    <div className="flex items-center gap-2 text-slate-400 font-black text-[10px] tracking-widest uppercase"><DollarSign className="w-4 h-4 text-emerald-500" /> DINHEIRO</div>
-                                                    <div className="flex items-center gap-2 text-slate-400 font-black text-[10px] tracking-widest uppercase"><Wallet className="w-4 h-4 text-emerald-500" /> SEU FGTS</div>
-                                                    <div className="flex items-center gap-2 text-slate-400 font-black text-[10px] tracking-widest uppercase"><Car className="w-4 h-4 text-emerald-500" /> SEU CARRO</div>
+                                                <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 py-4 border-y border-white/5">
+                                                    <div className="flex items-center gap-1.5 text-slate-400 font-black text-[9px] tracking-widest uppercase"><DollarSign className="w-3 h-3 text-emerald-500" /> DINHEIRO</div>
+                                                    <div className="flex items-center gap-1.5 text-slate-400 font-black text-[9px] tracking-widest uppercase"><Wallet className="w-3 h-3 text-emerald-500" /> SEU FGTS</div>
+                                                    <div className="flex items-center gap-1.5 text-slate-400 font-black text-[9px] tracking-widest uppercase"><Car className="w-3 h-3 text-emerald-500" /> SEU CARRO</div>
                                                 </div>
 
-                                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                                    <button onClick={() => setStep(2)} className="py-8 rounded-[2rem] bg-emerald-500 text-slate-950 hover:bg-emerald-400 transform hover:-translate-y-1 transition-all font-black text-sm shadow-xl shadow-emerald-500/20 active:scale-95 leading-tight uppercase px-4">
-                                                        SIM, EU <br /> CONSIGO!
+                                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 md:gap-4">
+                                                    <button onClick={() => setStep(2)} className="py-4 md:py-8 rounded-xl md:rounded-[2rem] bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-all font-black text-[10px] md:text-sm shadow-xl active:scale-95 leading-tight uppercase px-4">
+                                                        SIM, EU CONSIGO!
                                                     </button>
-                                                    <button onClick={() => setStep(3)} className="py-8 rounded-[2rem] bg-slate-800 text-white hover:bg-slate-700 transform hover:-translate-y-1 transition-all font-black text-sm active:scale-95 leading-tight uppercase px-4">
-                                                        SIMULAÇÃO <br /> EXPRESSA
+                                                    <button onClick={() => setStep(3)} className="py-4 md:py-8 rounded-xl md:rounded-[2rem] bg-slate-800 text-white hover:bg-slate-700 transition-all font-black text-[10px] md:text-sm active:scale-95 leading-tight uppercase px-4">
+                                                        CALCULADORA
                                                     </button>
-                                                    <button onClick={handleHelpRequest} className="py-8 rounded-[2rem] border-2 border-white/10 text-white hover:bg-white/5 transition-all font-black text-sm active:scale-95 leading-tight uppercase px-4">
-                                                        PRECISO <br /> DE AJUDA
+                                                    <button onClick={handleHelpRequest} className="py-4 md:py-8 rounded-xl md:rounded-[2rem] border-2 border-white/10 text-white hover:bg-white/5 transition-all font-black text-[10px] md:text-sm active:scale-95 leading-tight uppercase px-4">
+                                                        PRECISO DE AJUDA
                                                     </button>
                                                 </div>
-                                                <p className="text-center text-slate-500 text-[9px] font-black uppercase tracking-[0.2em]">Pule o quiz se desejar apenas ver a calculadora.</p>
                                             </div>
                                         )}
 
                                         {/* Step 2: Clean Name */}
                                         {step === 2 && (
-                                            <div className="animate-in fade-in slide-in-from-right duration-500 space-y-10">
-                                                <div className="text-center space-y-4">
-                                                    <h4 className="text-2xl font-bold text-white">Seu nome está limpo?</h4>
-                                                    <p className="text-slate-400 text-base">O banco pede CPF regular para aprovar o financiamento.</p>
+                                            <div className="animate-in fade-in slide-in-from-right duration-500 space-y-6 md:space-y-10">
+                                                <div className="text-center space-y-2 md:space-y-4">
+                                                    <h4 className="text-lg md:text-2xl font-bold text-white">Seu nome está limpo?</h4>
+                                                    <p className="text-slate-400 text-xs md:text-base">O banco pede CPF regular para aprovar o financiamento.</p>
                                                 </div>
 
-                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                                    <button onClick={() => setStep(3)} className="py-8 rounded-[2rem] bg-emerald-500 text-slate-950 hover:bg-emerald-400 transform hover:-translate-y-1 transition-all font-black text-lg active:scale-95">
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                                                    <button onClick={() => setStep(3)} className="py-6 md:py-8 rounded-2xl md:rounded-[2rem] bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-all font-black text-base md:text-lg active:scale-95">
                                                         TUDO CERTO!
                                                     </button>
-                                                    <button onClick={() => setStep(6)} className="py-8 rounded-[2rem] border-2 border-white/10 text-white hover:bg-white/5 transition-all font-black text-lg active:scale-95">
+                                                    <button onClick={() => setStep(6)} className="py-6 md:py-8 rounded-2xl md:rounded-[2rem] border-2 border-white/10 text-white hover:bg-white/5 transition-all font-black text-base md:text-lg active:scale-95">
                                                         TENHO RESTRIÇÃO
                                                     </button>
                                                 </div>
@@ -341,31 +350,73 @@ const FinancingSection: React.FC = () => {
 
                                         {/* Step 3: Your Plan */}
                                         {step === 3 && (
-                                            <div className="animate-in fade-in slide-in-from-right duration-500 space-y-8">
+                                            <div className="animate-in fade-in slide-in-from-right duration-500 space-y-4 md:space-y-8">
                                                 <div className="space-y-6">
                                                     <div>
-                                                        <label className="text-emerald-500 text-[10px] font-black uppercase tracking-[0.3em] mb-4 block">Sua Entrada Hoje</label>
+                                                        <label className="text-emerald-500 text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] mb-1.5 md:mb-4 block">Sua Entrada Hoje</label>
                                                         <div className="relative group">
-                                                            <div className="absolute inset-y-0 left-0 pl-8 flex items-center pointer-events-none text-slate-500 font-bold">R$</div>
+                                                            <div className="absolute inset-y-0 left-0 pl-5 md:pl-8 flex items-center pointer-events-none text-slate-500 font-bold">R$</div>
                                                             <input
                                                                 type="text"
                                                                 value={entryValue.toLocaleString('pt-BR')}
                                                                 onChange={handleEntryChange}
-                                                                className="w-full bg-slate-950/50 border-2 border-white/5 rounded-3xl py-8 pl-16 pr-8 text-3xl font-black text-white focus:outline-none focus:border-emerald-500/50 transition-all placeholder:text-slate-800"
+                                                                className="w-full bg-slate-950/50 border-2 border-white/5 rounded-xl md:rounded-3xl py-4 md:py-8 pl-10 md:pl-16 pr-5 md:pr-8 text-xl md:text-3xl font-black text-white focus:outline-none focus:border-emerald-500/50 transition-all"
                                                                 placeholder="0"
                                                             />
                                                         </div>
-                                                        <p className="text-[10px] text-slate-500 mt-3 font-bold uppercase tracking-widest pl-2">Use Dinheiro + FGTS + Carro</p>
+                                                        <div className="mt-2">
+                                                            <div className="flex items-center gap-3">
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => setEntryValue(Math.max(79000, entryValue - 5000))}
+                                                                    className="w-8 h-8 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center text-emerald-500 hover:bg-slate-800 transition-colors shrink-0 active:scale-90"
+                                                                >
+                                                                    <span className="text-xl font-black leading-none">-</span>
+                                                                </button>
+
+                                                                <div className="flex-grow pt-1">
+                                                                    <input
+                                                                        type="range"
+                                                                        min="79000"
+                                                                        max="395000"
+                                                                        step="1000"
+                                                                        value={entryValue}
+                                                                        onChange={(e) => setEntryValue(parseInt(e.target.value))}
+                                                                        className="w-full h-1.5 bg-emerald-500/20 rounded-full appearance-none cursor-pointer accent-emerald-500
+                                                                            [&::-webkit-slider-thumb]:appearance-none 
+                                                                            [&::-webkit-slider-thumb]:w-5 
+                                                                            [&::-webkit-slider-thumb]:h-5 
+                                                                            [&::-webkit-slider-thumb]:bg-white 
+                                                                            [&::-webkit-slider-thumb]:rounded-full 
+                                                                            [&::-webkit-slider-thumb]:border-2 
+                                                                            [&::-webkit-slider-thumb]:border-emerald-500
+                                                                            [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(16,185,129,0.3)]"
+                                                                    />
+                                                                </div>
+
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => setEntryValue(Math.min(395000, entryValue + 5000))}
+                                                                    className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-slate-950 hover:bg-emerald-400 transition-colors shrink-0 active:scale-90"
+                                                                >
+                                                                    <span className="text-xl font-black leading-none">+</span>
+                                                                </button>
+                                                            </div>
+                                                            <div className="flex justify-center mt-1">
+                                                                <span className="text-[7px] font-black text-emerald-500/40 uppercase tracking-widest">Aumentar Entrada = Parcela Menor</span>
+                                                            </div>
+                                                        </div>
+                                                        <p className="text-[7px] md:text-[10px] text-slate-500 mt-1 font-bold uppercase tracking-widest pl-2">Use Dinheiro + FGTS + Carro</p>
                                                     </div>
 
-                                                    <div className="space-y-4">
-                                                        <label className="text-emerald-500 text-[10px] font-black uppercase tracking-[0.3em] block">Tempo para Pagar</label>
-                                                        <div className="grid grid-cols-2 gap-3">
+                                                    <div className="space-y-3">
+                                                        <label className="text-emerald-500 text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] block">Tempo para Pagar</label>
+                                                        <div className="grid grid-cols-2 gap-2 md:gap-3">
                                                             {[420, 360, 300, 240].map(m => (
                                                                 <button
                                                                     key={m}
                                                                     onClick={() => setMonths(m)}
-                                                                    className={`py-5 rounded-2xl font-black text-sm transition-all border-2 ${months === m ? 'bg-emerald-500 text-slate-950 border-emerald-500 shadow-lg shadow-emerald-500/20' : 'bg-slate-950/30 text-slate-500 border-white/5 hover:border-white/10'}`}
+                                                                    className={`py-3 md:py-5 rounded-xl md:rounded-2xl font-black text-xs md:text-sm transition-all border-2 ${months === m ? 'bg-emerald-500 text-slate-950 border-emerald-500 shadow-lg' : 'bg-slate-950/30 text-slate-500 border-white/5 hover:border-white/10'}`}
                                                                 >
                                                                     {m / 12} Anos
                                                                 </button>
@@ -373,44 +424,34 @@ const FinancingSection: React.FC = () => {
                                                         </div>
                                                     </div>
 
-                                                    <div className="mt-8 bg-emerald-500/10 rounded-3xl p-8 border border-emerald-500/20 relative overflow-hidden group">
-                                                        <div className="absolute top-0 right-0 p-4 opacity-10">
-                                                            <Calculator className="w-16 h-16 text-emerald-500" />
-                                                        </div>
-                                                        <span className="text-emerald-400 text-[10px] font-black uppercase tracking-[0.3em] block mb-2">Parcela Mensal Estimada</span>
-                                                        <div className="flex items-baseline gap-2">
-                                                            <span className="text-emerald-500 font-bold text-lg">R$</span>
-                                                            <span className="text-5xl font-black text-white leading-none">{estimatedParcel.toLocaleString('pt-BR')}</span>
-                                                        </div>
-
-                                                        <div className="mt-6 flex gap-3 items-start">
-                                                            <Info className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                                                            <p className="text-[10px] text-slate-400 font-medium leading-relaxed uppercase tracking-wider">
-                                                                * Valores baseados em simulação. Esta estimativa não garante aprovação de crédito nem o valor final das parcelas, que podem variar de acordo com o perfil do cliente e política do banco.
-                                                            </p>
+                                                    <div className="mt-3 md:mt-8 bg-emerald-500/10 rounded-xl md:rounded-3xl p-4 md:p-8 border border-emerald-500/20 relative overflow-hidden">
+                                                        <span className="text-emerald-400 text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] block mb-1 leading-none">Parcela Mensal Estimada</span>
+                                                        <div className="flex items-baseline gap-1.5">
+                                                            <span className="text-emerald-500 font-bold text-sm md:text-lg">R$</span>
+                                                            <span className="text-2xl md:text-5xl font-black text-white">{estimatedParcel.toLocaleString('pt-BR')}</span>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <button onClick={() => setStep(4)} className="w-full bg-emerald-500 py-6 rounded-3xl text-slate-950 font-black text-lg hover:bg-emerald-400 transition-all shadow-xl shadow-emerald-500/20 active:scale-95 flex items-center justify-center gap-3">
-                                                    AVANÇAR PARA ANÁLISE
-                                                    <ArrowRight className="w-6 h-6" />
+                                                <button onClick={() => setStep(4)} className="w-full bg-emerald-500 py-4 md:py-6 rounded-2xl md:rounded-3xl text-slate-950 font-black text-sm md:text-lg hover:bg-emerald-400 transition-all shadow-xl active:scale-95 flex items-center justify-center gap-2">
+                                                    AVANÇAR
+                                                    <ArrowRight className="w-5 h-5" />
                                                 </button>
                                             </div>
                                         )}
 
                                         {/* Step 4: Vehicle Question */}
                                         {step === 4 && (
-                                            <div className="animate-in fade-in slide-in-from-right duration-500 space-y-8">
-                                                <div className="text-center space-y-4">
-                                                    <h4 className="text-2xl font-bold text-white">Possui veículo para dar na entrada?</h4>
-                                                    <p className="text-slate-400 text-sm">Aceitamos seu carro como parte do pagamento para facilitar sua conquista.</p>
+                                            <div className="animate-in fade-in slide-in-from-right duration-500 space-y-6 md:space-y-8">
+                                                <div className="text-center space-y-2 md:space-y-4">
+                                                    <h4 className="text-lg md:text-2xl font-bold text-white">Possui veículo para dar na entrada?</h4>
+                                                    <p className="text-slate-400 text-xs md:text-sm">Aceitamos seu carro como parte do pagamento.</p>
                                                 </div>
 
-                                                <div className="grid grid-cols-2 gap-4">
+                                                <div className="grid grid-cols-2 gap-3 md:gap-4">
                                                     <button
                                                         onClick={() => setFormData({ ...formData, temVeiculo: 'Sim' })}
-                                                        className={`py-6 rounded-2xl font-black text-lg transition-all border-2 ${formData.temVeiculo === 'Sim' ? 'bg-emerald-500 text-slate-950 border-emerald-500 shadow-lg shadow-emerald-500/10' : 'bg-slate-950/30 text-slate-400 border-white/5 hover:border-white/10'}`}
+                                                        className={`py-4 md:py-6 rounded-2xl font-black text-base md:text-lg transition-all border-2 ${formData.temVeiculo === 'Sim' ? 'bg-emerald-500 text-slate-950 border-emerald-500' : 'bg-slate-950/30 text-slate-400 border-white/5'}`}
                                                     >
                                                         SIM
                                                     </button>
@@ -419,7 +460,7 @@ const FinancingSection: React.FC = () => {
                                                             setFormData({ ...formData, temVeiculo: 'Não', veiculoModelo: '', veiculoAno: '' });
                                                             setStep(5);
                                                         }}
-                                                        className={`py-6 rounded-2xl font-black text-lg transition-all border-2 ${formData.temVeiculo === 'Não' ? 'bg-white/10 text-white border-white/20' : 'bg-slate-950/30 text-slate-400 border-white/5'}`}
+                                                        className={`py-4 md:py-6 rounded-2xl font-black text-base md:text-lg transition-all border-2 ${formData.temVeiculo === 'Não' ? 'bg-white/10 text-white border-white/20' : 'bg-slate-950/30 text-slate-400 border-white/5'}`}
                                                     >
                                                         NÃO
                                                     </button>
@@ -462,40 +503,40 @@ const FinancingSection: React.FC = () => {
 
                                         {/* Step 5: Final (Contact) */}
                                         {step === 5 && (
-                                            <form onSubmit={handleSubmit} className="animate-in fade-in slide-in-from-right duration-500 space-y-8">
-                                                <div className="text-center space-y-3">
-                                                    <h4 className="text-2xl font-bold text-white">Onde enviamos sua resposta?</h4>
-                                                    <p className="text-slate-400 text-sm">Um consultor vai te ligar para explicar cada detalhe.</p>
+                                            <form onSubmit={handleSubmit} className="animate-in fade-in slide-in-from-right duration-500 space-y-4 md:space-y-8">
+                                                <div className="text-center space-y-2 md:space-y-3">
+                                                    <h4 className="text-lg md:text-2xl font-bold text-white">Onde enviamos sua resposta?</h4>
+                                                    <p className="text-slate-400 text-xs md:text-sm">Um consultor vai te ligar para te orientar.</p>
                                                 </div>
 
-                                                <div className="space-y-4">
+                                                <div className="space-y-3 md:space-y-4">
                                                     <div className="relative">
-                                                        <User className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-600" />
+                                                        <User className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
                                                         <input
                                                             required
                                                             type="text"
                                                             placeholder="Seu Nome"
                                                             value={formData.nome}
                                                             onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                                                            className="w-full pl-16 pr-8 py-6 bg-slate-950 border border-white/10 rounded-2xl text-white placeholder-slate-600 outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-bold text-lg"
+                                                            className="w-full pl-14 md:pl-16 pr-8 py-4 md:py-6 bg-slate-950 border border-white/10 rounded-xl md:rounded-2xl text-white placeholder-slate-600 outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-bold text-base md:text-lg"
                                                         />
                                                     </div>
                                                     <div className="relative">
-                                                        <Smartphone className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-600" />
+                                                        <Smartphone className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600" />
                                                         <input
                                                             required
                                                             type="tel"
                                                             placeholder="Seu WhatsApp"
                                                             value={formData.telefone}
                                                             onChange={(e) => setFormData({ ...formData, telefone: maskPhone(e.target.value) })}
-                                                            className="w-full pl-16 pr-8 py-6 bg-slate-950 border border-white/10 rounded-2xl text-white placeholder-slate-600 outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-bold text-lg"
+                                                            className="w-full pl-14 md:pl-16 pr-8 py-4 md:py-6 bg-slate-950 border border-white/10 rounded-xl md:rounded-2xl text-white placeholder-slate-600 outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-bold text-base md:text-lg"
                                                         />
                                                     </div>
                                                 </div>
 
-                                                <div className="p-6 bg-emerald-500/5 rounded-2xl border border-emerald-500/10 flex items-center gap-4">
-                                                    <Info className="w-5 h-5 text-emerald-500 shrink-0" />
-                                                    <p className="text-[11px] text-slate-400 font-bold uppercase tracking-wider">
+                                                <div className="p-4 md:p-6 bg-emerald-500/5 rounded-xl md:rounded-2xl border border-emerald-500/10 flex items-center gap-3 md:gap-4">
+                                                    <Info className="w-4 h-4 text-emerald-500 shrink-0" />
+                                                    <p className="text-[9px] md:text-[11px] text-slate-400 font-bold uppercase tracking-wider">
                                                         Plano: {formatCurrency(entryValue)} de entrada em {(months / 12)} anos.
                                                     </p>
                                                 </div>
@@ -503,7 +544,7 @@ const FinancingSection: React.FC = () => {
                                                 <button
                                                     disabled={loading}
                                                     type="submit"
-                                                    className="w-full py-8 bg-emerald-500 text-slate-950 rounded-[2rem] font-black text-xl flex items-center justify-center gap-4 shadow-2xl shadow-emerald-500/20 hover:bg-emerald-400 transition-all active:scale-95 group"
+                                                    className="w-full py-5 md:py-8 bg-emerald-500 text-slate-950 rounded-2xl md:rounded-[2rem] font-black text-lg md:text-xl flex items-center justify-center gap-3 md:gap-4 shadow-2xl hover:bg-emerald-400 transition-all active:scale-95 group"
                                                 >
                                                     {loading ? <Loader2 className="animate-spin" /> : (
                                                         <>

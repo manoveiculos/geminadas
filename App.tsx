@@ -11,6 +11,8 @@ const FinancingSection = React.lazy(() => import('./components/FinancingSection'
 const ContactModal = React.lazy(() => import('./components/ContactModal').catch(() => ({ default: () => <div>Contact Error</div> })));
 const FAQSection = React.lazy(() => import('./components/FAQSection').catch(() => ({ default: () => <div>FAQ Error</div> })));
 const UnitFilter = React.lazy(() => import('./components/UnitFilter').catch(() => ({ default: () => <div>Filter Error</div> })));
+const PrivacyPolicy = React.lazy(() => import('./components/PrivacyPolicy').catch(() => ({ default: () => <div>Privacy Policy Error</div> })));
+const TermsOfUse = React.lazy(() => import('./components/TermsOfUse').catch(() => ({ default: () => <div>Terms of Use Error</div> })));
 
 import { supabase, trackEvent } from './services/supabaseClient';
 
@@ -18,6 +20,8 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
   const [logoClicks, setLogoClicks] = useState(0);
   const [heroImage, setHeroImage] = useState<string | undefined>(undefined);
   const [floorPlanImage, setFloorPlanImage] = useState<string | undefined>(undefined);
@@ -83,10 +87,12 @@ function App() {
 
   return (
     <div
-      className="min-h-screen flex flex-col font-sans selection:bg-emerald-500/30 bg-fixed bg-cover bg-center"
+      className="min-h-screen flex flex-col font-sans selection:bg-emerald-500/30"
       style={{
         backgroundImage: heroImage ? `url(${heroImage})` : 'none',
         backgroundAttachment: 'fixed',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         backgroundColor: '#0a0f1a',
         scrollPaddingTop: '96px' // Header height
       }}
@@ -165,9 +171,9 @@ function App() {
           <Hero heroImage={heroImage} />
         </React.Suspense>
 
-        <div className="bg-[#0d121f]/90 text-slate-400 py-4 text-[10px] font-bold uppercase tracking-[0.2em] border-y border-white/5 backdrop-blur-sm">
-          <p className="flex items-center justify-center gap-3">
-            <MapPin className="w-4 h-4 text-emerald-500" />
+        <div className="bg-[#0d121f]/60 text-slate-400 py-3 md:py-4 text-[8px] md:text-[10px] font-bold uppercase tracking-[0.2em] border-y border-white/5 backdrop-blur-sm">
+          <p className="flex items-center justify-center gap-2 md:gap-3 px-4 text-center">
+            <MapPin className="w-3 h-3 md:w-4 md:h-4 text-emerald-500 shrink-0" />
             Rua Antônio Tonon - Bairro Barragem, Rio do Sul/SC.
           </p>
         </div>
@@ -195,7 +201,7 @@ function App() {
             className="absolute inset-0"
           ></iframe>
 
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:left-20 md:translate-x-0 bg-[#0d121f] p-6 md:p-8 rounded-[2rem] border border-white/10 shadow-3xl max-w-[85%] md:max-w-sm">
+          <div className="absolute bottom-12 right-4 left-4 md:left-20 md:right-auto md:bottom-auto md:top-1/2 md:-translate-y-1/2 bg-[#0d121f] p-6 md:p-8 rounded-[2rem] border border-white/10 shadow-3xl md:max-w-sm">
             <span className="text-emerald-500 text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-2 md:mb-3 block text-center md:text-left">Endereço Privilegiado</span>
             <h3 className="font-black text-xl md:text-2xl mb-3 md:mb-4 text-white text-center md:text-left">Localização Livre de Enchentes</h3>
             <p className="text-slate-500 text-xs md:text-sm flex items-start gap-3 leading-relaxed">
@@ -232,8 +238,8 @@ function App() {
           <div className="border-t border-white/5 pt-12 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-[0.3em] text-slate-600">
             <p>&copy; 2024 Residencial Alêro. Todos os direitos reservados.</p>
             <div className="flex gap-8">
-              <a href="#" className="hover:text-emerald-500 transition-colors">Política de Privacidade</a>
-              <a href="#" className="hover:text-emerald-500 transition-colors">Termos de Uso</a>
+              <button onClick={() => setIsPrivacyOpen(true)} className="hover:text-emerald-500 transition-colors uppercase">Política de Privacidade</button>
+              <button onClick={() => setIsTermsOpen(true)} className="hover:text-emerald-500 transition-colors uppercase">Termos de Uso</button>
             </div>
           </div>
         </div>
@@ -243,15 +249,18 @@ function App() {
       <a
         href="https://wa.me/5547988452087?text=Olá! Tenho interesse no Residencial Alêro."
         target="_blank"
-        className="fixed bottom-8 right-8 z-[100] bg-emerald-500 text-white p-5 rounded-3xl shadow-[0_10px_40px_rgba(16,185,129,0.4)] hover:bg-emerald-400 transition-all hover:scale-110 active:scale-95 group"
+        className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100] bg-emerald-500 text-white p-4 md:p-5 rounded-full md:rounded-3xl shadow-[0_10px_40px_rgba(16,185,129,0.5)] hover:bg-emerald-400 transition-all hover:scale-110 active:scale-95 group animate-bounce-slow"
       >
-        <svg className="w-8 h-8 fill-current" viewBox="0 0 24 24">
+        <div className="absolute inset-0 rounded-full md:rounded-3xl bg-emerald-500 animate-ping opacity-20 group-hover:opacity-40 transition-opacity"></div>
+        <svg className="w-7 h-7 md:w-8 md:h-8 fill-current relative z-10" viewBox="0 0 24 24">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
         </svg>
       </a>
 
       <React.Suspense fallback={null}>
         <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
+        <PrivacyPolicy isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
+        <TermsOfUse isOpen={isTermsOpen} onClose={() => setIsTermsOpen(false)} />
       </React.Suspense>
     </div >
   );
