@@ -1,20 +1,22 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Residencial Alêro — Landing Page de Alta Conversão
 
-# Run and deploy your AI Studio app
+Landing page **Single Property Showcase** construída em **Next.js (App Router) + TypeScript + Tailwind CSS + Framer Motion + Embla Carousel**, focada na venda direta das 2 casas geminadas prontas no Bairro Barragem, Rio do Sul (SC).
 
-This contains everything you need to run your app locally.
+## Rodar localmente
 
-View your app in AI Studio: https://ai.studio/apps/drive/1grSsLgPBqAiNRqG7vIhWu1b07ND3Iu4h
+```bash
+npm install
+npm run dev
+```
 
-## Run Locally
+Acesse: `http://localhost:3000`
 
-**Prerequisites:**  Node.js
+## Variáveis de ambiente opcionais (`.env.local`)
 
+```env
+NEXT_PUBLIC_SITE_URL=https://residencialalero.com.br
+NEXT_PUBLIC_META_PIXEL_ID=
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+- Google Analytics (`G-H0PLTNLJTS`) já está configurado no `src/app/layout.tsx`.
+- Todos os cliques em WhatsApp e envio do simulador disparam `trackEvent` (`Lead`, `Contact`, `InitiateCheckout`, `ViewContent`) para Meta Pixel e GA4.
